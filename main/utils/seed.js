@@ -1,7 +1,5 @@
 const connection = require('../config/connection')
 const { User, Thought, Reaction } = require('../models')
-const seedUsers = require('./data')
-// console.log(users)
 connection.on('error', (err) => err)
 
 connection.once('open', async () => {
@@ -18,8 +16,29 @@ connection.once('open', async () => {
     if (reactionsCheck.length) {
         await connection.dropCollection('reactions')
     }
-    const userData = await seedUsers()
-    console.table(userData)
+    const users = [
+        {
+            username: "matthewcaleb",
+            email: "matthewcaleb@gmail.com",
+            // thoughts: [1, 2],
+            // friends: [1, 2]
+        },
+        {
+            username: "ryanhong",
+            email: "ryanhong@gmail.com",
+            // thoughts: [3, 4],
+            // friends: [3, 4]
+        },
+        {
+            username: "sagetyler",
+            email: "sagetyler@gmail.com",
+            // thoughts: [5, 6],
+            // friends: [5, 6]
+        }
+    ]
+    const seedUsers = await User.create(users)
+    
+    console.table(seedUsers)
     console.info('Seeding complete! 🌱');
     process.exit(0);
-  })
+})
