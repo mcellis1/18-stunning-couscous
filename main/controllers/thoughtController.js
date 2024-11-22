@@ -65,8 +65,43 @@ module.exports = {
         } catch (err) {
             res.status(500).json(err)
         }
-    }
-    // /api/thoughts/:thoughtId/reactions post to create a reaction stored in a single thoughts reactions array field
-    
+    },
+    // post to create a reaction stored in a single thoughts reactions array field
+    async addReaction(req, res) {
+        try {
+            const reaction = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $addToSet: { reactions: req.body } },
+                { runValidators: true, new: true }
+            ).select('-__v')
+            if (!reaction) {
+                return res.status(404).json({ message: 'no thought found with this id' })
+            }
+            res.json(reaction)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    },
     // delete to pull and remove a reaction by the readctions reactionid value
+    async removeReaction(req, res) {
+        try {
+            const reaction = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                {
+                    $pull: {
+                        reactions: {
+                            _id: req.params.reactionId
+                        }
+                    }
+                },
+                { runValidators: true, new: true }
+            ).select('-__v')
+            if (!reaction) {
+                return res.status(404).json({ message: 'no reaction found with this id' })
+            }
+            res.json(reaction)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    }
 }

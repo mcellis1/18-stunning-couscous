@@ -4,12 +4,14 @@ const {
     getOneThought,
     addThought,
     updateThought,
-    removeThought
+    removeThought,
+    addReaction,
+    removeReaction
 } = require('../../controllers/thoughtController')
 
 // get all thoughts
 router.route('/').get(getThoughts)
-// post to create a new thought dont forget to push the created thoughts id to the associated uiusers thoughts array field
+// post to create a new thought
 .post(addThought)
 
 // get a single thought by its id
@@ -19,8 +21,10 @@ router.route('/:thoughtId').get(getOneThought)
 // delete to remove a thought by its id
 .delete(removeThought)
 
-// /api/thoughts/:thoughtId/reactions post to create a reaction stored in a single thoughts reactions array field
+// post to create a reaction stored in a single thoughts reactions array field
+router.route('/:thoughtId/reactions').post(addReaction)
 
 // delete to pull and remove a reaction by the readctions reactionid value
+router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction)
 
 module.exports = router
