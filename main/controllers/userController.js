@@ -65,7 +65,7 @@ module.exports = {
             res.status(500).json(err)
         }
     },
-    // /api/users/:userId/friends/:friendId post to add a new friend to a user's friend list
+    // post to add a new friend to a user's friend list
     async addFriend(req, res) {
         try {
             const user = await User.findOneAndUpdate(

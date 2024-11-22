@@ -21,7 +21,7 @@ router.route('/:userId').get(getOneUser)
 // delete to remove a user, and remove its associated thoughts when deleted
 .delete(deleteUser)
 
-// /api/users/:userId/friends/:friendId post to add a new friend to a user's friend list
+// post to add a new friend to a user's friend list
 router.route('/:userId/friends/:friendId').post(addFriend)
 // delete to remove a friend from a user's friend list
 .delete(removeFriend)
