@@ -20,20 +20,14 @@ connection.once('open', async () => {
         {
             username: "matthewcaleb",
             email: "matthewcaleb@gmail.com",
-            // thoughts: [1, 2],
-            // friends: [1, 2]
         },
         {
             username: "ryanhong",
             email: "ryanhong@gmail.com",
-            // thoughts: [3, 4],
-            // friends: [3, 4]
         },
         {
             username: "sagetyler",
             email: "sagetyler@gmail.com",
-            // thoughts: [5, 6],
-            // friends: [5, 6]
         }
     ]
     const seedUsers = await User.create(users)
