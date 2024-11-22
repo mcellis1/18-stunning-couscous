@@ -18,13 +18,13 @@ module.exports = {
             const user = await User.findOne({ _id: req.params.userId })
                 .select('-__v')
                 .populate('friends')
+                .populate('thoughts')
             if (!user) {
-                return res.status(404).json({ message: 'no student found with this id' })
+                return res.status(404).json({ message: 'no user found with this id' })
             }
             res.json(user)
         } catch (err) {
-            console.log(err)
-            return res.status(500).json(err)
+            res.status(500).json(err)
         }
     },
     // post a new user

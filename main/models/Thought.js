@@ -3,6 +3,9 @@ const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
     {
+        thoughtId: {
+            type: Schema.Types.ObjectId,
+        },
         thoughtText: {
             type: String,
             required: true,
@@ -16,12 +19,7 @@ const thoughtSchema = new Schema(
             type: String,
             required: true
         },
-        // reactions: [reactionSchema]
-    },
-    {
-        toJSON: {
-            getters: true
-        }
+        reactions: [reactionSchema]
     }
 )
 

@@ -1,8 +1,10 @@
 const { Schema, model } = require('mongoose')
-// const { isEmail } = require('validator/lib/isEmail')
 
 const userSchema = new Schema(
     {
+        userId: {
+            type: Schema.Types.ObjectId,
+        },
         username: {
             type: String,
             unique: true,
@@ -12,8 +14,13 @@ const userSchema = new Schema(
         email: {
             type: String,
             unique: true,
-            required: true,
-            // validate: [isEmail, 'please use a valid email']
+            required: [true, 'email is required'],
+            validate: {
+                validator: function(v) {
+                    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v)
+                },
+                message: 'please enter a valid email'
+            }
         },
         thoughts: [
             {
