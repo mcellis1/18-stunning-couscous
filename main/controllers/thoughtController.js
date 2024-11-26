@@ -4,7 +4,7 @@ module.exports = {
     // get all thoughts
     async getThoughts(req, res) {
         try {
-            const thoughts = await Thought.find().select('-__v')
+            const thoughts = await Thought.find()
             res.json(thoughts)
         } catch (err) {
             console.log(err)
@@ -14,7 +14,7 @@ module.exports = {
     // get a single thought by its id
     async getOneThought(req, res) {
         try {
-            const thought = await Thought.findOne({ _id: req.params.thoughtId }).select('-__v')
+            const thought = await Thought.findOne({ _id: req.params.thoughtId })
             if (!thought) {
                 return res.status(404).json({ message: 'no thought found with this id' })
             }
@@ -27,9 +27,9 @@ module.exports = {
     // post to create a new thought dont forget to push the created thoughts id to the associated users thoughts array field
     async addThought(req, res) {
         try {
-            const thought = await Thought.create(req.body).select('-__v')
+            const thought = await Thought.create(req.body)
             await User.findOneAndUpdate(
-                { username: req.body.username },
+                { username: thought.username },
                 { $addToSet: { thoughts: thought._id } },
                 { runValidators: true, new: true }
             )
@@ -45,7 +45,7 @@ module.exports = {
                 { _id: req.params.thoughtId },
                 { $set: req.body },
                 { runValidators: true, new: true }
-            ).select('-__v')
+            )
             if (!thought) {
                 res.status(404).json({ message: 'no thought found with that id' })
             }
@@ -73,7 +73,7 @@ module.exports = {
                 { _id: req.params.thoughtId },
                 { $addToSet: { reactions: req.body } },
                 { runValidators: true, new: true }
-            ).select('-__v')
+            )
             if (!reaction) {
                 return res.status(404).json({ message: 'no thought found with this id' })
             }
@@ -95,7 +95,7 @@ module.exports = {
                     }
                 },
                 { runValidators: true, new: true }
-            ).select('-__v')
+            )
             if (!reaction) {
                 return res.status(404).json({ message: 'no reaction found with this id' })
             }
